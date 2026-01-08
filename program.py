@@ -103,12 +103,28 @@ while True:
                     print(f"Trilling duur: {duur}ms")
                     print(f"Status: {HuidigeStatus}")
                     print("Attractie gesloten vanwege teveel trillingen")
-    else:
-        # als er op de knop is gedrukt: reset de status en open de attractie
-        if Knop.value() == 0:
-            HuidigeStatus = StatusVeilig
-            GroenLED.value(1)
-            RoodLED.value(0)
-            AttractieLED.value(0)
-            Attractie_open = True
-            time.sleep(0.5)
+
+    # als er op de knop is gedrukt: reset de status en open de attractie
+    if Knop.value() == 0:
+        # -------- STATUS RESET --------
+        HuidigeStatus = StatusVeilig
+        Attractie_open = True
+
+        # -------- LEDS RESET --------
+        GroenLED.value(1)
+        GeelLED.value(0)
+        RoodLED.value(0)
+        AttractieLED.value(0)
+
+        # -------- TRILLING RESET --------
+        trilling_actief = False
+        start_tijd = 0
+        Laatste_verandering = 0
+        laatste_trilling_duur = 0
+        laatste_waarde = TiltSensor.value()
+
+        # -------- TIMERS RESET --------
+        laatste_update_5s = time.ticks_ms()
+
+        print("Systeem volledig gereset, attractie weer open")
+        time.sleep(0.5)
